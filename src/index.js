@@ -80,7 +80,7 @@ const data =[{
 		main_image: 465
 	},
 ];
-//////////////////////////////////////////////12234124214124124124
+
 function DescriptionForm(){
 	
 	return( 
@@ -104,7 +104,6 @@ function DescriptionForm(){
 			  </div>
 		</div> 
 	)
-	///12444444444444
 }
 
 
