@@ -134,7 +134,7 @@ class ListItem extends React.Component {
 			<div className='item-wrapper col-4 p-3'>
 				<div className='p-3 d-flex flex-column cell'>
 					<div className='img-wrapper mx-auto' style={{padding:0, maxWidth:300, minWidth:200}}>
-						<img src={this.dataEntry.images.find(image => image.id == this.dataEntry.main_image).url} alt='X'/>
+						<img src={this.dataEntry.images.find(image => image.id === this.dataEntry.main_image).url} alt='X'/>
 					</div>
 					<div className='description-wrapper d-flex flex-column'>
 						<h3 className='text-left text-wrap pt-3'>{this.dataEntry.name}</h3>
