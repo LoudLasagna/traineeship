@@ -1,16 +1,19 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-grid.css';
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
+
+import React, { useState } from 'react';
+import 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
+import ReactDOM from 'react-dom';
+
 import $ from 'jquery/dist/jquery.js';
-import 'bootstrap/dist/js/bootstrap.bundle';
+
 import placeholder from './pics/placeholder.png';
 import bin from './pics/bin.png';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Modal, Button } from 'bootstrap';
 
 const data =[{
 		id: 1,
@@ -117,15 +120,13 @@ class ListItem extends React.Component {
 		this.state = {showDescription: false};
 		
 
-		
-		this.handleCloseFormClick = this.handleCloseFormClick.bind(this);
 	}
 	
 	handleShowFormClick = () => {
 		this.setState({showDescription: true})
 	}
 	
-	handleCloseFormClick(){
+	handleCloseFormClick = () => {
 		this.setState({showDescription: false})
 	}
 	
@@ -148,12 +149,12 @@ class ListItem extends React.Component {
 						<div className='product-buttons-wrapper col-6 d-flex flex-column'>
 							<button onClick={this.handleCloseFormClick} className='btn btn-warning col-12 mx-auto'>в корзину</button>
 							<button onClick={this.handleShowFormClick} className='btn btn-warning col-12 mx-auto mt-2'>подробнee</button>
-							<div>{this.state.showDescription ? 'Показывать форму' : 'Не показывать форму'}</div>
+							
 						</div>
 					</div>
 				</div>
 
-				
+				<div>{this.state.showDescription ? <DescriptionForm></DescriptionForm> : null}</div>
 			</div>
 		);
 	}
@@ -214,10 +215,10 @@ class TEST extends React.Component {
 			<div className='catalog-wrapper container col-12 pt-5'>
 				<div className='row'>
 				
-				<ListItem index='0' showDescription={false}/>
-				<ListItem index='1' showDescription={false}/>
-				<ListItem index='2' showDescription={false}/>
-				<ListItem index='3' showDescription={false}/>
+				<ListItem index='0' />
+				<ListItem index='1' />
+				<ListItem index='2' />
+				<ListItem index='3' />
 				
 				
 				</div>
