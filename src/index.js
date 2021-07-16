@@ -80,7 +80,7 @@ const data =[{
 		main_image: 465
 	},
 ];
-
+//////////////////////////////////////////////
 function DescriptionForm(){
 	
 	return( 
