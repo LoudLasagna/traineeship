@@ -1,19 +1,21 @@
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-grid.css';
 import './index.css';
 
 import React, { useState } from 'react';
 import 'react-bootstrap';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Carousel } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
-
 import $ from 'jquery/dist/jquery.js';
-
-import placeholder from './pics/placeholder.png';
-import bin from './pics/bin.png';
-
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import placeholder from './pics/placeholder.png';
+import tray from './pics/bin.png';
+
+import RBCarousel from "react-bootstrap-carousel";
+import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
+
 
 const data =[{
 		id: 1,
@@ -77,37 +79,18 @@ const data =[{
 		  id: 485,
 		  url: 'https://picsum.photos/id/1023/200'
 		}, {
-		  id: 465,
-		  url: 'https://picsum.photos/id/1025/200'
+			id: 465,
+			url: 'https://picsum.photos/id/1025/200'
+		}, {
+			id: 466,
+			url: 'https://picsum.photos/id/1028/200'
 		}],
 		main_image: 465
 	},
 ];
 
-function DescriptionForm(){
-	
-	return( 
-		<div className="modal">
-			  <div className="modal-dialog" role="document">
-				<div className="modal-content">
-				  <div className="modal-header">
-					<h5 className="modal-title">Modal title</h5>
-					<button type="button" className="close" data-dismiss="modal" aria-label="Close">
-					  <span aria-hidden="true">&times;</span>
-					</button>
-				  </div>
-				  <div className="modal-body">
-					<p>Modal body text goes here.</p>
-				  </div>
-				  <div className="modal-footer">
-					<button type="button" className="btn btn-primary">Save changes</button>
-					<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-				  </div>
-				</div>
-			  </div>
-		</div> 
-	)
-}
+const bin = [];
+
 
 
 
@@ -118,8 +101,6 @@ class ListItem extends React.Component {
 		this.dataEntry = data[this.props.index];
 		
 		this.state = {showDescription: false};
-		
-
 	}
 	
 	handleShowFormClick = () => {
@@ -135,7 +116,7 @@ class ListItem extends React.Component {
 			<div className='item-wrapper col-4 p-3'>
 				<div className='p-3 d-flex flex-column cell'>
 					<div className='img-wrapper mx-auto' style={{padding:0, maxWidth:300, minWidth:200}}>
-						<img src={this.dataEntry.images.find(image => image.id === this.dataEntry.main_image).url} alt='X'/>
+						<img src={getArrayEntryById(this.dataEntry.images, this.dataEntry.main_image).url} alt='X'/>
 					</div>
 					<div className='description-wrapper d-flex flex-column'>
 						<h3 className='text-left text-wrap pt-3'>{this.dataEntry.name}</h3>
@@ -148,56 +129,151 @@ class ListItem extends React.Component {
 						</div>
 						<div className='product-buttons-wrapper col-6 d-flex flex-column'>
 							<button onClick={this.handleCloseFormClick} className='btn btn-warning col-12 mx-auto'>в корзину</button>
-							<button onClick={this.handleShowFormClick} className='btn btn-warning col-12 mx-auto mt-2'>подробнee</button>
-							
+							<DescriptionForm data={this.dataEntry}/>	
 						</div>
 					</div>
 				</div>
-
-				<div>{this.state.showDescription ? <DescriptionForm></DescriptionForm> : null}</div>
+					
 			</div>
 		);
 	}
 }
 
-/*<Modal show={this.showDescription} onHide={this.handleCloseFormClick}>
-					<Modal.Header closeButton>
-						<Modal.Title>{this.dataEntry.name}</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						{this.dataEntry.full_description}
-					</Modal.Body>
-					<Modal.Footer>
-						<Button variant='warning' onClick={this.handleCloseFormClick}>в корзину</Button>
-					</Modal.Footer>
-				</Modal>*/
+function DescriptionForm(props) {
+	const [show, setShow] = useState(false);
+  
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+  
+	return (
+		<>
+			<Button variant='warning' onClick={handleShow} className='col-12 mx-auto mt-2'>
+				подробнее
+			</Button>
 
+			<Modal show={show} onHide={handleClose}>
+				<Modal.Header>
+					<Modal.Title className='col-11'>{props.data.name}</Modal.Title>
+					<Button variant='link' className='col-1' onClick={handleClose}>
+						X
+					</Button>
+				</Modal.Header>
+				<Modal.Body>
+					
+					<CarouselT images={props.data.images} mainImage={props.data.main_image}/>
 
-/*const itemsList = data.map((dataentry) => 
-		<div key={data.id} className='item-wrapper col-4 p-3'>
-			<div className='p-3 d-flex flex-column cell'>
-				<div className='img-wrapper mx-auto' style={{padding:0, maxWidth:300, minWidth:200}}>
-					<img src={dataentry.images.find(image => image.id == dataentry.main_image).url}></img>
-				</div>
-				<div className='description-wrapper d-flex flex-column'>
-					<h3 className='text-left text-wrap pt-3'>{dataentry.name}</h3>
-					<h6 className='text-left text-wrap text-break'>{dataentry.short_description}</h6>
-				</div>
-				<div className='product-footer-wrapper d-flex flex-row mt-2' style={{paddingRight:0}}>
-					<div className='product-price-wrapper col-6 d-flex flex-column'>
-						<h4>{dataentry.price + ' руб'}</h4>
-						<h6>{'Рейтинг: ' + '★'.repeat(dataentry.rating)}</h6>
+				</Modal.Body>
+				<Modal.Footer className='d-flex flex-column'>
+					<div className='text-wrap text-break col-12'>
+						{props.data.full_description}
 					</div>
-					<div className='product-buttons-wrapper col-6 d-flex flex-column'>
-						<button className='btn btn-warning col-12 mx-auto'>в корзину</button>
-						<button className='btn btn-warning col-12 mx-auto mt-2'>подробнee</button>
+					<div className='modalPriceRating d-flex flex-row col-12 mt-1 pt-3'>
+						<div className='col-4'>{'Рейтинг: ' + '★'.repeat(props.data.rating)}</div>
+						<div className='leftBorder col-4 text-center'>{props.data.price + ' руб.'} </div>
+						<Button variant='warning' className='col-4' onClick={handleClose}>
+							В корзину
+						</Button>
 					</div>
-				</div>
-			</div>
-		</div>
-	);*/
+				</Modal.Footer>
+			</Modal>
+		</>
+	);
+  }
+
+/*<Carousel keyboard={false}>
+						<Carousel.Item>
+							<img
+								className="d-block w-100"
+								src={props.data.images.find(image => image.id === props.data.main_image).url}
+								alt='X'
+							/>
+						</Carousel.Item>
+						{
+							props.data.images.map((image) => 
+								image.id === props.data.main_image ? '' : 
+								<Carousel.Item key={image.id}>
+									<img
+										className="d-block w-100"
+										src={image.url}
+										alt='X'
+									/>
+								</Carousel.Item>
+							)
+						}
+					</Carousel>*/
+
+class CarouselT extends React.PureComponent {
+	constructor(props) {
+		super(props);
+		this.images = this.props.images;
+		this.mainImage = this.props.mainImage;
+		this.slider = React.createRef();
+		this.state = {
+		autoplay: true,
+		};
+
+	}
 
 
+	_onSelect = (active, direction) => {
+		console.log(`active=${active} && direction=${direction}`);
+	};
+	_visiableOnSelect = (active) => {
+		console.log(`visiable onSelect active=${active}`);
+	};
+	_slideNext = () => {
+		this.slider.current.slideNext();
+	};
+	_slidePrev = () => {
+		this.slider.current.slidePrev();
+	};
+	_goToSlide = () => {
+		this.slider.current.goToSlide(1);
+	};
+	_autoplay = () => {
+		this.setState({ autoplay: !this.state.autoplay });
+	};
+	render() {
+		return (
+			
+			<RBCarousel
+				animation={true}
+				autoplay={this.state.autoplay}
+				slideshowSpeed={3500}
+				defaultActiveIndex={getArrayIndexById(this.images, this.mainImage)}
+				leftIcon={this.state.leftIcon}
+				rightIcon={this.state.rightIcon}
+				ref={this.slider}
+				version={4}
+				>
+				{
+					this.images.map((image) => 
+						<div key={image.id}>
+							<img
+								className="d-block w-100"
+								src={image.url}
+								alt='X'
+							/>
+						</div>
+					)
+				}
+			</RBCarousel>
+		);
+	}
+}
+
+function getArrayIndexById(array, id){
+	for(var i = 0; i < array.length; i++){
+		if (array[i].id === id) {
+			return i;
+		} 
+	};
+	return 0;
+}
+
+function getArrayEntryById(array, id){
+	return array.find(arrayEntry => arrayEntry.id === id);
+}
 
 class TEST extends React.Component {
     render() {
@@ -209,7 +285,7 @@ class TEST extends React.Component {
 			<div className='menu container d-flex col-12'>
 				<button className='btn btn-outline-primary col-1'>Войти</button>
 				<div className='col-10' />
-				<button className='btn btn-outline-secondary col-1'><img src={bin}/></button>
+				<button className='btn btn-outline-secondary col-1'><img src={tray} alt='X'/></button>
 			</div>
 			
 			<div className='catalog-wrapper container col-12 pt-5'>
@@ -223,7 +299,7 @@ class TEST extends React.Component {
 				
 				</div>
 			</div>
-			
+
 		</div>
 	    );    
     }
