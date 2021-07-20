@@ -89,7 +89,7 @@ const data =[{
 	},
 ];
 
-const bin = [];
+let shoppingCart = [];
 
 
 
@@ -180,6 +180,29 @@ function DescriptionForm(props) {
 	);
   }
 
+class BinButton extends React.Component {
+	constructor(props){
+		super(props);
+
+		this.state = {
+			isInBin: false
+		}
+	}
+
+
+	handleClick = () => {
+		shoppingCart.push(this.props.itemId);
+		this.setState({isInBin: true});
+	}
+	
+	render(){
+		return(
+			<Button variant='warning' className={this.props.className} onClick={this.handleClick}>
+				В корзину
+			</Button>
+		)
+	}
+}
 /*<Carousel keyboard={false}>
 						<Carousel.Item>
 							<img
@@ -214,25 +237,6 @@ class CarouselT extends React.PureComponent {
 
 	}
 
-
-	_onSelect = (active, direction) => {
-		console.log(`active=${active} && direction=${direction}`);
-	};
-	_visiableOnSelect = (active) => {
-		console.log(`visiable onSelect active=${active}`);
-	};
-	_slideNext = () => {
-		this.slider.current.slideNext();
-	};
-	_slidePrev = () => {
-		this.slider.current.slidePrev();
-	};
-	_goToSlide = () => {
-		this.slider.current.goToSlide(1);
-	};
-	_autoplay = () => {
-		this.setState({ autoplay: !this.state.autoplay });
-	};
 	render() {
 		return (
 			
@@ -275,6 +279,7 @@ function getArrayEntryById(array, id){
 	return array.find(arrayEntry => arrayEntry.id === id);
 }
 
+
 class TEST extends React.Component {
     render() {
         return(
@@ -295,7 +300,6 @@ class TEST extends React.Component {
 				<ListItem index='1' />
 				<ListItem index='2' />
 				<ListItem index='3' />
-				
 				
 				</div>
 			</div>
