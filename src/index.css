@@ -27,6 +27,7 @@ img{
 .cell{
 	background-color: rgb(242,247,252);
 	border-radius:5px;
+  border:1px solid lightgray
 }
 .btn{
 	text-decoration:none;

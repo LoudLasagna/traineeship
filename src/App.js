@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Button,
-  Modal,
-  Carousel,
   Container,
   Row,
-  Col,
-  Popover,
+  Col
 } from 'react-bootstrap';
-import ListItem from './ListItem';
+import ListItem from './components/ListItem';
+import LoginForm from './components/LoginForm';
 
+import './components/redux/redusers'
 import reportWebVitals from './reportWebVitals';
 
 import placeholder from './pics/placeholder.png';
 import tray from './pics/bin.png';
+
+
+
 
 const data = [{
   id: 1,
@@ -24,12 +25,12 @@ const data = [{
   price: 1000,
   images: [{
     id: 1,
-    url: 'https://picsum.photos/id/19/200',
+    url: 'https://picsum.photos/id/19/200'
   }, {
     id: 2,
-    url: 'https://picsum.photos/id/20/200',
+    url: 'https://picsum.photos/id/20/200'
   }],
-  main_image: 1,
+  main_image: 1
 },
 {
   id: 2,
@@ -40,12 +41,12 @@ const data = [{
   price: 2500,
   images: [{
     id: 3,
-    url: 'https://picsum.photos/id/222/200',
+    url: 'https://picsum.photos/id/222/200'
   }, {
     id: 4,
-    url: 'https://picsum.photos/id/64/200',
+    url: 'https://picsum.photos/id/64/200'
   }],
-  main_image: 4,
+  main_image: 4
 },
 {
   id: 3,
@@ -56,12 +57,12 @@ const data = [{
   price: 13,
   images: [{
     id: 3,
-    url: 'https://picsum.photos/id/122/200',
+    url: 'https://picsum.photos/id/122/200'
   }, {
     id: 4,
-    url: 'https://picsum.photos/id/654/200',
+    url: 'https://picsum.photos/id/654/200'
   }],
-  main_image: 3,
+  main_image: 3
 },
 {
   id: 4,
@@ -72,44 +73,43 @@ const data = [{
   price: 6666,
   images: [{
     id: 16,
-    url: 'https://picsum.photos/id/1022/200',
+    url: 'https://picsum.photos/id/1022/200'
   }, {
     id: 485,
-    url: 'https://picsum.photos/id/1023/200',
+    url: 'https://picsum.photos/id/1023/200'
   }, {
     id: 465,
-    url: 'https://picsum.photos/id/1025/200',
+    url: 'https://picsum.photos/id/1025/200'
   }, {
     id: 466,
-    url: 'https://picsum.photos/id/1028/200',
+    url: 'https://picsum.photos/id/1028/200'
   }],
-  main_image: 465,
-},
+  main_image: 465
+}
 ];
+
+
 
 class App extends React.Component {
   render() {
     return (
-      <div className='wrapper col-11 mt-3 center-block mx-auto p-4'>
-	  <header>
-	    <div className="d-flex col-12">
-	    <h2 className="col-3">магазинский</h2>
-	   </div>
-	</header>
-	<div className="menu mb-3 d-flex col-12">
-		<div className='col-1'><button className="btn btn-outline-primary">Войти</button></div>
-		<div className="col-10" md="auto" />
-		<div className='col-1'><button className="btn btn-outline-secondary" style={{ minWidth: '50px' }}><img src={tray} alt='X' /></button></div>
-	</div>
-
-	<div className='catalog-wrapper'>
-		<Container fluid className="p-0">
-		<Row>
-			{data && data.length ? data.map((item) => <Col key={item.id}><ListItem item={item} /></Col>) : 'Нет товаров'}
-		</Row>
-		</Container>
-	</div>
-	</div>
+      <div className="wrapper col-11 mt-3 center-block mx-auto p-4">
+        <header>
+          <h2 className="col-3">магазинский</h2>
+        </header>
+        <div className="menu mb-3 d-flex col-12">
+          <LoginForm/>
+          <div className="col-9" md="auto" />
+          <button type="button" className="btn btn-outline-secondary col-1" style={{ minWidth: '50px' }}><img src={tray} alt="X" /></button>
+        </div>
+        <div className="catalog-wrapper">
+          <Container fluid className="p-0">
+            <Row>
+              {data && data.length ? data.map((item) => <Col xs={12} sm={6} lg={4} xl={3} key={item.id} ><ListItem item={item} /></Col>) : 'Нет товаров'}
+            </Row>
+          </Container>
+        </div>
+      </div>
     );
   }
 }
