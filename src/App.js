@@ -7,7 +7,6 @@ import {
 import ListItem from './components/ListItem';
 import LoginForm from './components/LoginForm';
 
-import './components/redux/redusers'
 import reportWebVitals from './reportWebVitals';
 
 import placeholder from './pics/placeholder.png';
