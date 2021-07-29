@@ -6,14 +6,7 @@ import {
 } from 'react-bootstrap';
 import ListItem from './components/ListItem';
 import LoginForm from './components/LoginForm';
-
-import reportWebVitals from './reportWebVitals';
-
-import placeholder from './pics/placeholder.png';
-import tray from './pics/bin.png';
-
-
-
+import MainCartButton from './components/MainCartButton';
 
 const data = [{
   id: 1,
@@ -87,30 +80,26 @@ const data = [{
 }
 ];
 
-
-
-class App extends React.Component {
-  render() {
-    return (
-      <div className="wrapper col-11 mt-3 center-block mx-auto p-4">
-        <header>
-          <h2 className="col-3">магазинский</h2>
-        </header>
-        <div className="menu mb-3 d-flex col-12">
-          <LoginForm/>
-          <div className="col-9" md="auto" />
-          <button type="button" className="btn btn-outline-secondary col-1" style={{ minWidth: '50px' }}><img src={tray} alt="X" /></button>
-        </div>
-        <div className="catalog-wrapper">
-          <Container fluid className="p-0">
-            <Row>
-              {data && data.length ? data.map((item) => <Col xs={12} sm={6} lg={4} xl={3} key={item.id} ><ListItem item={item} /></Col>) : 'Нет товаров'}
-            </Row>
-          </Container>
-        </div>
+function App() {
+  return (
+    <div className="wrapper col-11 mt-3 center-block mx-auto p-4">
+      <header>
+        <h2 className="col-3">магазинский</h2>
+      </header>
+      <div className="menu mb-3 d-flex col-12">
+        <LoginForm />
+        <div className="col-9" md="auto" />
+        <MainCartButton />
       </div>
-    );
-  }
+      <div className="catalog-wrapper">
+        <Container fluid className="p-0">
+          <Row>
+            {data && data.length ? data.map((item) => <Col xs={12} sm={6} lg={4} xl={3} key={item.id}><ListItem item={item} /></Col>) : 'Нет товаров'}
+          </Row>
+        </Container>
+      </div>
+    </div>
+  );
 }
 
 export default App;
