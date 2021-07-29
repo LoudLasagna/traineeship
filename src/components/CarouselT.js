@@ -20,6 +20,8 @@ function CarouselT(props) {
   const sortedImages = [].concat(props.images)
   sortedImages.splice(getI(props.images, props.mainImage), 1)
   sortedImages.unshift(getE(props.images, props.mainImage))
+
+  console.log(sortedImages.length);
   return (
     <Carousel keyboard={false}>
       {sortedImages.map((image) => (
