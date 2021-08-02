@@ -1,8 +1,13 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import {
   Button,
   Dropdown
 } from 'react-bootstrap';
+import PropTypes, { defaultProps } from 'prop-types';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, removeAllFromCart } from './redux/cartSlicer';
@@ -82,28 +87,55 @@ const data = [{
 }
 ];
 
+CartItem.propTypes = {
+  product: PropTypes.objectOf(PropTypes.object).isRequired,
+  id: PropTypes.number,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  images: PropTypes.objectOf(PropTypes.array),
+  main_image: PropTypes.number
+}
+CartItem.defaultProps = {
+  id: 0,
+  name: 'placeholder',
+  price: 0,
+  images: [],
+  main_image: 0
+}
+
 function CartItem(props) {
+  const dispatch = useDispatch()
+  const {
+    product:
+    {
+      id, name, price, images, main_image
+    }
+  } = props
+
+  const removeProduct = () => {
+    dispatch(removeFromCart(id))
+  }
+
   return (
     <Dropdown.Item className="d-flex" style={{ minWidth: '300px' }}>
+      <Button variant="btn btn-outline link" className="col-1" onClick={removeProduct}>X</Button>
       <div className="col-3">
-        <img src={props.product.images.find((arrayEntry) => arrayEntry.id === props.product.main_image).url} alt="X" style={{ width: '50px' }} />
+        <img src={images.find((arrayEntry) => arrayEntry.id === main_image).url} alt="X" style={{ width: '50px' }} />
       </div>
-      <div className="col-5 d-flex flex-column">
+      <div className="col-4 d-flex flex-column">
         <div>
-          {props.product.name}
+          {name}
         </div>
         <div>
-          {`${props.product.price} руб`}
+          {`${price} руб`}
         </div>
       </div>
-      <div className="col-4">
-        <ProductCartButton classname="col-12" productId={props.product.id} />
-      </div>
+      <ProductCartButton classname="col-4" productId={id} />
     </Dropdown.Item>
   )
 }
 
-export default function MainCartButton(props) {
+export default function MainCartButton() {
   const cart = useSelector((state) => state.cart.products)
   const dispatch = useDispatch()
 
@@ -118,11 +150,11 @@ export default function MainCartButton(props) {
     <>
       {cart.length > 0
         ? (
-          <Dropdown className="col-1" autoClose={false}>
+          <Dropdown className="col-1" autoClose="outside">
             <Dropdown.Toggle variant="outline-secondary" className="col-12" id="dropdown-autoclose-outside">
               <img src={tray} alt="X" />
             </Dropdown.Toggle>
-            <Dropdown.Menu style={{ minWidth: '350px' }}>
+            <Dropdown.Menu style={{ minWidth: 450 }}>
               {
               data.map((arrayEntry) => (
                 cart.find((cartEntry) => cartEntry.id === arrayEntry.id)
@@ -138,9 +170,16 @@ export default function MainCartButton(props) {
             </Dropdown.Menu>
           </Dropdown>
         ) : (
-          <Button variant="outline-secondary" className="col-1" style={{ minWidth: '50px' }}>
-            <img src={tray} alt="X" />
-          </Button>
+          <Dropdown align="end" className="col-1" autoClose="outside">
+            <Dropdown.Toggle variant="outline-secondary" className="col-12" id="dropdown-autoclose-outside">
+              <img src={tray} alt="X" />
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="d-flex" flex-column style={{ minHeight: 200 }}>
+              <Dropdown.Item>
+                <div className="col-12 text-center">Корзина пуста</div>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         )}
     </>
   )

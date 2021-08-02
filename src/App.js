@@ -94,7 +94,7 @@ function App() {
       <div className="catalog-wrapper">
         <Container fluid className="p-0">
           <Row>
-            {data && data.length ? data.map((item) => <Col xs={12} sm={6} lg={4} xl={3} key={item.id}><ListItem item={item} /></Col>) : 'Нет товаров'}
+            {data && data.length ? data.map((item) => <Col xs={12} sm={6} lg={4} xl={3} key={item.id}><ListItem data={item} /></Col>) : 'Нет товаров'}
           </Row>
         </Container>
       </div>
