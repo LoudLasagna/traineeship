@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Button,
@@ -5,48 +6,58 @@ import {
   InputGroup
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { addToCart, removeFromCart, setAmount } from './redux/cartSlicer';
+import { useSelector, useDispatch, connect } from 'react-redux';
+import { addProduct, removeProduct, setProductAmount } from './redux/actions';
 
-ProductCartButton.propTypes = {
-  productId: PropTypes.number.isRequired
-}
-
-export default function ProductCartButton(props) {
+const ProductCartButton = (props) => {
   const { productId } = props
+  const data = useSelector((state) => state.cartReducer.data)
 
-  const cart = useSelector((state) => state.cart.products)
-  const cartItem = useSelector((state) => state.cart.products.find((arrayEntry) => arrayEntry.id
-  === productId))
+  const cart = useSelector((state) => state.cartReducer.products)
+  const cartItem = useSelector(
+    (state) => state.cartReducer.products.find((arrayEntry) => arrayEntry.id === productId)
+  )
 
   const dispatch = useDispatch()
 
   let isInCart;
-
+  const productPrice = data.find((arrayEntry) => arrayEntry.id === productId).price
   if (cart.find((item) => item.id === productId)) {
     isInCart = true;
   } else isInCart = false;
 
   const handleCartClick = () => {
-    dispatch(addToCart({ id: productId, amount: 1 }))
+    dispatch(addProduct({
+      id: productId,
+      amount: 1,
+      price: productPrice
+    }))
   }
 
   const handleMinusClick = () => {
     if (cartItem.amount - 1 > 0) {
-      dispatch(setAmount({ id: productId, amount: cartItem.amount - 1 }))
-    } else dispatch(removeFromCart({ id: productId }))
+      dispatch(setProductAmount({
+        id: productId,
+        amount: cartItem.amount - 1,
+        price: productPrice
+      }))
+    } else dispatch(removeProduct({ id: productId }))
   }
 
   const handlePlusClick = () => {
-    dispatch(setAmount({ id: productId, amount: cartItem.amount + 1 }))
+    dispatch(setProductAmount({
+      id: productId,
+      amount: cartItem.amount + 1,
+      price: productPrice
+    }))
   }
 
   const handleInputChange = (event) => {
     const { target } = event;
     const { value } = target;
 
-    if (Number(value) > 0) dispatch(setAmount({ id: productId, amount: Number(value) }))
-    else dispatch(removeFromCart({ id: productId }))
+    if (Number(value) > 0) dispatch(setProductAmount({ id: productId, amount: Number(value) }))
+    else dispatch(removeProduct({ id: productId }))
   }
 
   return (
@@ -66,3 +77,9 @@ export default function ProductCartButton(props) {
     </>
   )
 }
+
+ProductCartButton.propTypes = {
+  productId: PropTypes.number.isRequired
+}
+
+export default connect()(ProductCartButton)

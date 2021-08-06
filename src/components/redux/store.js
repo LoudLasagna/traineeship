@@ -15,13 +15,6 @@ const store = createStore(myApp)
 
 console.log(store.getState())
 
-// Каждый раз при обновлении состояния - выводим его
-// Отметим, что subscribe() возвращает функцию для отмены регистрации слушателя
-const unsubscribe = store.subscribe(() => console.log(store.getState()))
-
-store.dispatch(addProduct({ id: 1, amount: 12 }))
-store.dispatch(addProduct({ id: 2, amount: 9 }))
-
-unsubscribe()
+store.subscribe(() => console.log(store.getState()))
 
 export default store

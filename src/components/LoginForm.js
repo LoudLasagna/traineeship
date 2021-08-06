@@ -6,8 +6,10 @@ import {
   Form
 } from 'react-bootstrap';
 
-import { useSelector, useDispatch } from 'react-redux'
-import { login, logout } from './redux/userSlicer'
+import { Link } from 'react-router-dom';
+
+import { useSelector, useDispatch, connect } from 'react-redux'
+import { login, logout } from './redux/actions'
 
 const users = [
   {
@@ -26,12 +28,13 @@ const users = [
 ]
 
 function LoginForm() {
-  const usert = useSelector((state) => state.user.userObj)
+  const usert = useSelector((state) => state.userReducer.user)
   const dispatch = useDispatch()
+  const [show, setShow] = useState(false)
+  const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
 
-  const [show, setShow] = useState(false);
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+  console.log(usert)
 
   const toggleForm = () => setShow((prev) => !prev);
 
@@ -66,23 +69,26 @@ function LoginForm() {
     setPhone('');
     setPassword('');
     toggleForm();
+    setShow(false);
   }
 
   return (
     <>
-      {usert && users.find((user) => user === usert)
+      {usert && usert.name
         ? (
-          <div className="col-2 d-flex">
-            <div className="col-6 text-center justify-content-center align-items-center">{usert.name}</div>
-            <button type="button" className="btn btn-outline-primary col-6" onClick={handleLogout}>
+          <div className="col-3 d-flex justify-content-between">
+            <Link className="btn btn-link col-5" to="/profile">
+              {usert.name}
+            </Link>
+            <Button variant="outline-primary" className="btn col-4" onClick={handleLogout}>
               Выйти
-            </button>
+            </Button>
           </div>
         )
         : (
-          <button type="button" className="btn btn-outline-primary col-2" onClick={toggleForm}>
+          <Button variant="outline-primary" className="col-3" onClick={toggleForm}>
             Войти
-          </button>
+          </Button>
         )}
 
       <Modal show={show} onHide={toggleForm}>
@@ -129,4 +135,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default connect()(LoginForm);
