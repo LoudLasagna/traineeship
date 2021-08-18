@@ -89,7 +89,7 @@ function App() {
         <h2>магазинский | оформление заказа</h2>
       </header>
       <div className="menu mb-3 d-flex col-12">
-        <Link to="/" className="col-3 btn btn-link text-left">
+        <Link to="/" className="btn btn-link">
           На главную
         </Link>
       </div>
