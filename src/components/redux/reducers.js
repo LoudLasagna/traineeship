@@ -75,6 +75,32 @@ const cartDefaultState = {
   ]
 }
 
+const usersDefaultState = {
+  userList: [
+    {
+      name: 'Michael',
+      phone: '8(999)999-99-99',
+      email: 'ttt@ttt',
+      password: 'test123',
+      address: 'teeteet'
+    }, {
+      name: 'Jim',
+      phone: '8(999)999-99-91',
+      email: 'ttt@ttt',
+      password: 'test123',
+      address: 'teeteet'
+    }, {
+      name: 'Pam',
+      phone: '8(999)999-99-92',
+      email: 'ttt@ttt',
+      password: 'test123',
+      address: 'teeteet'
+    }
+  ],
+  user: {},
+  loggedIn: false
+}
+
 function cartReducer(state = cartDefaultState, action) {
   switch (action.type) {
     case 'ADD_PRODUCT':
@@ -118,17 +144,33 @@ function cartReducer(state = cartDefaultState, action) {
         ...state,
         products: []
       }
+    case 'CHECKOUT':
+      return {
+        ...state,
+        products: []
+      }
     default:
       return state
   }
 }
 
-function userReducer(state = {}, action) {
+function userReducer(state = usersDefaultState, action) {
   switch (action.type) {
     case 'LOGIN':
-      return { ...state, user: action.user }
+      return { ...state, user: action.user, loggedIn: true }
     case 'LOGOUT':
-      return { ...state, user: {} }
+      return { ...state, user: {}, loggedIn: false }
+    case 'CHANGEUSER':
+      return {
+        ...state,
+        user: action.newUser,
+        userList:
+          state.userList.map((arrayEntry) => (
+            arrayEntry.name === action.oldUser.name && arrayEntry.phone === action.oldUser.phone
+              ? action.newUser
+              : arrayEntry
+          ))
+      }
     default:
       return state
   }

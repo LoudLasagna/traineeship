@@ -8,60 +8,13 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import { clearCart, removeProduct } from './redux/actions';
 import tray from '../pics/bin.png';
 
+import MiniListItem from './MiniListItem'
 import ProductCartButton from './ProductCartButton';
-
-CartItem.propTypes = {
-  product: PropTypes.objectOf(PropTypes.object).isRequired,
-  id: PropTypes.number,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  images: PropTypes.objectOf(PropTypes.array),
-  main_image: PropTypes.number
-}
-CartItem.defaultProps = {
-  id: 0,
-  name: 'placeholder',
-  price: 0,
-  images: [],
-  main_image: 0
-}
-
-function CartItem(props) {
-  const dispatch = useDispatch()
-  const {
-    product:
-    {
-      id, name, price, images, main_image
-    }
-  } = props
-
-  const removeProductClick = () => {
-    const tid = id
-    dispatch(removeProduct({ id: tid }))
-  }
-
-  return (
-    <Dropdown.Item className="d-flex" style={{ minWidth: '300px' }}>
-      <Button variant="btn btn-outline link" className="col-1" onClick={removeProductClick}>X</Button>
-      <div className="col-3">
-        <img src={images.find((arrayEntry) => arrayEntry.id === main_image).url} alt="X" style={{ width: '50px' }} />
-      </div>
-      <div className="col-4 d-flex flex-column">
-        <div>
-          {name}
-        </div>
-        <div>
-          {`${price} руб`}
-        </div>
-      </div>
-      <ProductCartButton classname="col-4" productId={id} />
-    </Dropdown.Item>
-  )
-}
 
 function MainCartButton() {
   const cart = useSelector((state) => state.cartReducer.products)
@@ -78,9 +31,6 @@ function MainCartButton() {
       .reduce((accumulator, currentValue) => accumulator + currentValue)
   }
 
-  const checkout = () => {
-    console.log(`${totalProducts} ${totalPrice}`)
-  }
   const clearCartClick = () => {
     dispatch(clearCart())
   }
@@ -89,36 +39,40 @@ function MainCartButton() {
     <>
       { cart.length > 0
         ? (
-          <Dropdown className="col-1" autoClose="outside">
+          <Dropdown>
             <Dropdown.Toggle variant="outline-secondary" className="col-12" id="dropdown-autoclose-outside">
-              <img src={tray} alt="X" />
+              <img src={tray} alt="X" style={{ minWidth: 24 }} />
             </Dropdown.Toggle>
-            <Dropdown.Menu style={{ minWidth: 450 }}>
+            <Dropdown.Menu style={{ minWidth: 500 }}>
               { data.map((arrayEntry) => (
                 cart.find((cartEntry) => cartEntry.id === arrayEntry.id)
-                  ? <CartItem key={arrayEntry.id} product={arrayEntry} />
+                  ? (
+                    <Dropdown.ItemText key={arrayEntry.id} className="d-flex" style={{ minWidth: '300px' }}>
+                      <MiniListItem key={arrayEntry.id} product={arrayEntry} />
+                    </Dropdown.ItemText>
+                  )
                   : ''
               ))}
               <Dropdown.Divider />
-              <Dropdown.Item className="d-flex justify-content-between">
+              <Dropdown.ItemText className="d-flex justify-content-between">
                 <div className="col-4 d-flex flex-column">
                   <div>{`Всего ${totalProducts} товар(а/ов)`}</div>
                   <div>{`на ${totalPrice} рублей`}</div>
                 </div>
-                <Button variant="warning" className="col-5" onClick={checkout}> Оформить заказ </Button>
+                <Link to="/checkout" className="col-5 btn btn-warning"> Оформить заказ </Link>
                 <Button variant="outline-secondary" className="col-2" onClick={clearCartClick}> X </Button>
-              </Dropdown.Item>
+              </Dropdown.ItemText>
             </Dropdown.Menu>
           </Dropdown>
         ) : (
-          <Dropdown align="end" className="col-1" autoClose="outside">
+          <Dropdown align="end">
             <Dropdown.Toggle variant="outline-secondary" className="col-12" id="dropdown-autoclose-outside">
               <img src={tray} alt="X" />
             </Dropdown.Toggle>
             <Dropdown.Menu className="d-flex" flex-column style={{ minHeight: 200 }}>
-              <Dropdown.Item>
+              <Dropdown.ItemText>
                 <div className="col-12 text-center">Корзина пуста</div>
-              </Dropdown.Item>
+              </Dropdown.ItemText>
             </Dropdown.Menu>
           </Dropdown>
         )}

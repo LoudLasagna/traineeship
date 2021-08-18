@@ -18,6 +18,11 @@ export const clearCart = () => ({
   type: 'CLEAR_CART'
 })
 
+export const checkOut = (userInfo) => ({
+  type: 'CHECKOUT',
+  userInfo
+})
+
 export const login = (user) => ({
   type: 'LOGIN',
   user
@@ -25,4 +30,10 @@ export const login = (user) => ({
 
 export const logout = () => ({
   type: 'LOGOUT'
+})
+
+export const changeuser = (oldUser, newUser) => ({
+  type: 'CHANGEUSER',
+  oldUser,
+  newUser
 })

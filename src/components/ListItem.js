@@ -20,7 +20,7 @@ const pt = {
   full_description: PropTypes.string,
   price: PropTypes.number,
   rating: PropTypes.number,
-  images: PropTypes.objectOf(PropTypes.array),
+  images: PropTypes.arrayOf(PropTypes.array),
   main_image: PropTypes.number
 }
 
@@ -34,12 +34,6 @@ const dp = {
   images: [],
   main_image: 0
 }
-
-ListItem.propTypes = pt;
-ListItem.defaultProps = dp;
-
-DescriptionForm.propTypes = pt;
-DescriptionForm.defaultProps = dp;
 
 function ListItem(props) {
   const {
@@ -138,5 +132,11 @@ function DescriptionForm(props) {
     </>
   );
 }
+
+ListItem.propTypes = pt;
+ListItem.defaultProps = dp;
+
+DescriptionForm.propTypes = pt;
+DescriptionForm.defaultProps = dp;
 
 export default ListItem;

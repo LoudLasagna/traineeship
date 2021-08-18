@@ -1,20 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { createStore } from 'redux'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import myApp from './reducers'
 
-import {
-  addProduct,
-  removeProduct,
-  setProductAmount,
-  clearCart,
-  login,
-  logout
-} from './actions'
+const persistConfig = {
+  key: 'storage',
+  storage
+}
 
-const store = createStore(myApp)
+const persistedReducer = persistReducer(persistConfig, myApp)
 
-console.log(store.getState())
-
-store.subscribe(() => console.log(store.getState()))
-
-export default store
+export default () => {
+  const store = createStore(persistedReducer)
+  const persistor = persistStore(store)
+  return { store, persistor }
+}

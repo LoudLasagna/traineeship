@@ -5,19 +5,20 @@ import {
   Switch
 } from 'react-router-dom';
 import React from 'react';
-import { useSelector, connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 import Home from './components/pages/home';
 import Profile from './components/pages/profile'
+import Checkout from './components/pages/checkout';
 
 function App() {
-  const data = useSelector((state) => state.cartReducer.data)
   return (
     <>
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/checkout" component={Checkout} />
         </Switch>
       </Router>
     </>

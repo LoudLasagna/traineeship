@@ -16,9 +16,8 @@ function App() {
       <header>
         <h2>магазинский | каталог</h2>
       </header>
-      <div className="menu mb-3 d-flex col-12">
+      <div className="menu mb-3 d-flex col-12 justify-content-between">
         <LoginForm />
-        <div className="col-8" md="auto" />
         <MainCartButton />
       </div>
       <div>
