@@ -20,7 +20,6 @@ function App() {
   const user = useSelector((state) => state.userReducer.user)
   const cart = useSelector((state) => state.cartReducer.cart)
   const dispatch = useDispatch()
- 
 
   const [deliveryMethod, setDeliveryMethod] = useState('самовывоз')
   const [paymentMethod, setPaymentMethod] = useState('наличными')
@@ -141,166 +140,167 @@ function App() {
   }
   validateInput();
   return (cart.length > 0
-    ? (<div className="wrapper col-11 mt-3 center-block mx-auto p-4">
-      <header>
-        <h2>магазинский | оформление заказа</h2>
-      </header>
-      <div className="menu mb-3 d-flex col-12">
-        <Link to="/" className="btn btn-link">
-          На главную
-        </Link>
-      </div>
-      <Container fluid style={{ padding: 0 }}>
-        <Row className="justify-content-between">
-          <Col
-            xs={{
-              span: 12,
-              order: 2,
-              paddingRight: '1em'
-            }}
-            md={{
-              span: 6,
-              order: 1
-            }}
-          >
-            <Form className="d-flex flex-column p-3 cell" onSubmit={checkout}>
-              <h4 className="pb-3">Информация о заказе</h4>
-              <Form.Group>
-                <Form.Label> Имя: </Form.Label>
-                <Form.Control
-                  name="uname"
-                  type="text"
-                  placeholder="Введите имя"
-                  value={fields.uname}
-                  onChange={handleChange}
-                  required
-                />
-                <Form.Text style={{ color: 'red' }}>
-                  {errors.uname}
-                </Form.Text>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label> Телефон: </Form.Label>
-                <MaskedFormControl
-                  name="phone"
-                  placeholder="Введите телефон"
-                  value={fields.phone}
-                  onChange={handleChange}
-                  mask="8(111)111-11-11"
-                  required
-                  feedback="Вы должны ввести номер телефона"
-                />
-                <Form.Text style={{ color: 'red' }}>
-                  {errors.phone}
-                </Form.Text>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Способ доставки:</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={deliveryMethod}
-                  onChange={(event) => setDeliveryMethod(event.target.value)}
-                  style={{ appearance: 'auto' }}
-                  required
-                >
-                  <option>самовывоз</option>
-                  <option>курьер</option>
-                </Form.Control>
-              </Form.Group>
-              {deliveryMethod === 'курьер'
-                ? (
-                  <>
-                    <Form.Group>
-                      <Form.Label> Адрес: </Form.Label>
-                      <Form.Control
-                        name="address"
-                        type="text"
-                        placeholder="Введите адрес"
-                        value={fields.address}
-                        onChange={handleChange}
-                        required
-                      />
-                      <Form.Text style={{ color: 'red' }}>
-                        {errors.address}
-                      </Form.Text>
-                    </Form.Group>
-                  </>
-                )
-                : ''}
-              <Form.Group className="mt-3">
-                <Form.Label>Способ оплаты:</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={paymentMethod}
-                  onChange={(event) => setPaymentMethod(event.target.value)}
-                  style={{ appearance: 'auto' }}
-                  required
-                >
-                  <option>наличными</option>
-                  <option>онлайн</option>
-                  {deliveryMethod === 'курьер'
-                    ? (<option>картой курьеру</option>)
-                    : ''}
-                </Form.Control>
-              </Form.Group>
-              {paymentMethod === 'онлайн'
-                ? (
-                  <>
-                    <Form.Group>
-                      <Form.Label> Электронная почта: </Form.Label>
-                      <Form.Control
-                        name="email"
-                        type="email"
-                        placeholder="Введите электронную почту для получения чека"
-                        value={fields.email}
-                        onChange={handleChange}
-                        required
-                      />
-                      <Form.Text style={{ color: 'red' }}>
-                        {errors.email}
-                      </Form.Text>
-                    </Form.Group>
-                  </>
-                )
-                : ''}
-              <Form.Group className="mb-5 mt-3">
-                <Form.Label> Комментарий к заказу: </Form.Label>
-                <Form.Control
-                  name="comment"
-                  type="text"
-                  placeholder="Комментарий"
-                  value={fields.comment}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label className="d-flex flex-column">
-                  <h4>
-                    {`Всего ${totalProducts} товар(а/ов)`}
-                  </h4>
-                  {discount === 0 ? '' : <h6>{`скидка ${discount}%`}</h6>}
-                  <h4>
-                    {`Итого: ${sumWithDiscount}`}
-                  </h4>
-                </Form.Label>
-                <Button type="submit" className="btn btn-warning" style={{ width: '100%' }}>Заказать</Button>
-              </Form.Group>
-            </Form>
-          </Col>
-          <Col
-            xs={{
-              span: 12,
-              order: 1,
-              paddingRight: '1em'
-            }}
-            md={{
-              span: 6,
-              order: 2
-            }}
-          >
-            <div className="d-flex flex-column p-3 cell checkoutCart mb-3">
-              <h4 className="pb-3">Корзина</h4>
-              {
+    ? (
+      <div className="wrapper col-11 mt-3 center-block mx-auto p-4">
+        <header>
+          <h2>магазинский | оформление заказа</h2>
+        </header>
+        <div className="menu mb-3 d-flex col-12">
+          <Link to="/" className="btn btn-link">
+            На главную
+          </Link>
+        </div>
+        <Container fluid style={{ padding: 0 }}>
+          <Row className="justify-content-between">
+            <Col
+              xs={{
+                span: 12,
+                order: 2,
+                paddingRight: '1em'
+              }}
+              md={{
+                span: 6,
+                order: 1
+              }}
+            >
+              <Form className="d-flex flex-column p-3 cell" onSubmit={checkout}>
+                <h4 className="pb-3">Информация о заказе</h4>
+                <Form.Group>
+                  <Form.Label> Имя: </Form.Label>
+                  <Form.Control
+                    name="uname"
+                    type="text"
+                    placeholder="Введите имя"
+                    value={fields.uname}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Form.Text style={{ color: 'red' }}>
+                    {errors.uname}
+                  </Form.Text>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label> Телефон: </Form.Label>
+                  <MaskedFormControl
+                    name="phone"
+                    placeholder="Введите телефон"
+                    value={fields.phone}
+                    onChange={handleChange}
+                    mask="8(111)111-11-11"
+                    required
+                    feedback="Вы должны ввести номер телефона"
+                  />
+                  <Form.Text style={{ color: 'red' }}>
+                    {errors.phone}
+                  </Form.Text>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Способ доставки:</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={deliveryMethod}
+                    onChange={(event) => setDeliveryMethod(event.target.value)}
+                    style={{ appearance: 'auto' }}
+                    required
+                  >
+                    <option>самовывоз</option>
+                    <option>курьер</option>
+                  </Form.Control>
+                </Form.Group>
+                {deliveryMethod === 'курьер'
+                  ? (
+                    <>
+                      <Form.Group>
+                        <Form.Label> Адрес: </Form.Label>
+                        <Form.Control
+                          name="address"
+                          type="text"
+                          placeholder="Введите адрес"
+                          value={fields.address}
+                          onChange={handleChange}
+                          required
+                        />
+                        <Form.Text style={{ color: 'red' }}>
+                          {errors.address}
+                        </Form.Text>
+                      </Form.Group>
+                    </>
+                  )
+                  : ''}
+                <Form.Group className="mt-3">
+                  <Form.Label>Способ оплаты:</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={paymentMethod}
+                    onChange={(event) => setPaymentMethod(event.target.value)}
+                    style={{ appearance: 'auto' }}
+                    required
+                  >
+                    <option>наличными</option>
+                    <option>онлайн</option>
+                    {deliveryMethod === 'курьер'
+                      ? (<option>картой курьеру</option>)
+                      : ''}
+                  </Form.Control>
+                </Form.Group>
+                {paymentMethod === 'онлайн'
+                  ? (
+                    <>
+                      <Form.Group>
+                        <Form.Label> Электронная почта: </Form.Label>
+                        <Form.Control
+                          name="email"
+                          type="email"
+                          placeholder="Введите электронную почту для получения чека"
+                          value={fields.email}
+                          onChange={handleChange}
+                          required
+                        />
+                        <Form.Text style={{ color: 'red' }}>
+                          {errors.email}
+                        </Form.Text>
+                      </Form.Group>
+                    </>
+                  )
+                  : ''}
+                <Form.Group className="mb-5 mt-3">
+                  <Form.Label> Комментарий к заказу: </Form.Label>
+                  <Form.Control
+                    name="comment"
+                    type="text"
+                    placeholder="Комментарий"
+                    value={fields.comment}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label className="d-flex flex-column">
+                    <h4>
+                      {`Всего ${totalProducts} товар(а/ов)`}
+                    </h4>
+                    {discount === 0 ? '' : <h6>{`скидка ${discount}%`}</h6>}
+                    <h4>
+                      {`Итого: ${sumWithDiscount}`}
+                    </h4>
+                  </Form.Label>
+                  <Button type="submit" className="btn btn-warning" style={{ width: '100%' }}>Заказать</Button>
+                </Form.Group>
+              </Form>
+            </Col>
+            <Col
+              xs={{
+                span: 12,
+                order: 1,
+                paddingRight: '1em'
+              }}
+              md={{
+                span: 6,
+                order: 2
+              }}
+            >
+              <div className="d-flex flex-column p-3 cell checkoutCart mb-3">
+                <h4 className="pb-3">Корзина</h4>
+                {
                 cart.length > 0
                   ? cart.map((cartEntry) => (
                     <div className="pb-3" key={cartEntry.object.id}>
@@ -311,12 +311,12 @@ function App() {
                   ))
                   : <h5>Корзина пуста</h5>
               }
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-    ) : ( <Redirect to="/" /> )
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    ) : (<Redirect to="/" />)
   );
 }
 

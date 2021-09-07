@@ -115,85 +115,86 @@ function App() {
     validateInput()
   }
 
-  return (loggedIn 
-    ? (<div className="wrapper col-11 mt-3 center-block mx-auto p-4">
-      <header>
-        <h2>магазинский | профиль</h2>
-      </header>
-      <div className="menu mb-3 d-flex col-12 justify-content-between">
-        <Link to="/" className="btn btn-link text-left">
-          На главную
-        </Link>
-        <MainCartButton />
-      </div>
+  return (loggedIn
+    ? (
+      <div className="wrapper col-11 mt-3 center-block mx-auto p-4">
+        <header>
+          <h2>магазинский | профиль</h2>
+        </header>
+        <div className="menu mb-3 d-flex col-12 justify-content-between">
+          <Link to="/" className="btn btn-link text-left">
+            На главную
+          </Link>
+          <MainCartButton />
+        </div>
 
-      <Form className="d-flex flex-column cell p-3">
-        <h4>Информация о пользователе</h4>
-        <Form.Group style={{ borderBottom: '1px solid lightgrey', borderTop: '1px solid lightgrey' }}>
-          <Form.Label> Имя: </Form.Label>
-          <Form.Control
-            name="uname"
-            type="text"
-            placeholder="Введите имя"
-            value={fields.uname}
-            onChange={handleChange}
-            readOnly={!change}
-            plaintext={!change}
-          />
-          <Form.Text style={{ color: 'red' }}>
-            {errors.uname}
-          </Form.Text>
-        </Form.Group>
-        <Form.Group style={{ borderBottom: '1px solid lightgrey' }}>
-          <Form.Label> Телефон: </Form.Label>
-          <MaskedFormControl
-            name="phone"
-            type="phone"
-            placeholder="Введите телефон"
-            value={fields.phone}
-            onChange={handleChange}
-            mask="8(111)111-11-11"
-            readOnly={!change}
-            plaintext={!change}
-          />
-          <Form.Text style={{ color: 'red' }}>
-            {errors.phone}
-          </Form.Text>
-        </Form.Group>
-        <Form.Group style={{ borderBottom: '1px solid lightgrey' }}>
-          <Form.Label> Электронная почта: </Form.Label>
-          <Form.Control
-            name="email"
-            type="email"
-            placeholder="Введите электронную почту"
-            value={fields.email}
-            onChange={handleChange}
-            readOnly={!change}
-            plaintext={!change}
-          />
-          <Form.Text style={{ color: 'red' }}>
-            {errors.email}
-          </Form.Text>
-        </Form.Group>
-        <Form.Group className="mb-4" style={{ borderBottom: '1px solid lightgrey' }}>
-          <Form.Label> Адрес: </Form.Label>
-          <Form.Control
-            name="address"
-            type="text"
-            placeholder="Введите адрес"
-            value={fields.address}
-            onChange={handleChange}
-            readOnly={!change}
-            plaintext={!change}
-          />
-          <Form.Text style={{ color: 'red' }}>
-            {errors.address}
-          </Form.Text>
-        </Form.Group>
-        { !change ? <Button variant="warning" onClick={toggleChanges}>Изменить</Button>
-          : <Button variant="warning" onClick={confirmChanges}>Сохранить изменения</Button>}
-      </Form>
-    </div>
+        <Form className="d-flex flex-column cell p-3">
+          <h4>Информация о пользователе</h4>
+          <Form.Group style={{ borderBottom: '1px solid lightgrey', borderTop: '1px solid lightgrey' }}>
+            <Form.Label> Имя: </Form.Label>
+            <Form.Control
+              name="uname"
+              type="text"
+              placeholder="Введите имя"
+              value={fields.uname}
+              onChange={handleChange}
+              readOnly={!change}
+              plaintext={!change}
+            />
+            <Form.Text style={{ color: 'red' }}>
+              {errors.uname}
+            </Form.Text>
+          </Form.Group>
+          <Form.Group style={{ borderBottom: '1px solid lightgrey' }}>
+            <Form.Label> Телефон: </Form.Label>
+            <MaskedFormControl
+              name="phone"
+              type="phone"
+              placeholder="Введите телефон"
+              value={fields.phone}
+              onChange={handleChange}
+              mask="8(111)111-11-11"
+              readOnly={!change}
+              plaintext={!change}
+            />
+            <Form.Text style={{ color: 'red' }}>
+              {errors.phone}
+            </Form.Text>
+          </Form.Group>
+          <Form.Group style={{ borderBottom: '1px solid lightgrey' }}>
+            <Form.Label> Электронная почта: </Form.Label>
+            <Form.Control
+              name="email"
+              type="email"
+              placeholder="Введите электронную почту"
+              value={fields.email}
+              onChange={handleChange}
+              readOnly={!change}
+              plaintext={!change}
+            />
+            <Form.Text style={{ color: 'red' }}>
+              {errors.email}
+            </Form.Text>
+          </Form.Group>
+          <Form.Group className="mb-4" style={{ borderBottom: '1px solid lightgrey' }}>
+            <Form.Label> Адрес: </Form.Label>
+            <Form.Control
+              name="address"
+              type="text"
+              placeholder="Введите адрес"
+              value={fields.address}
+              onChange={handleChange}
+              readOnly={!change}
+              plaintext={!change}
+            />
+            <Form.Text style={{ color: 'red' }}>
+              {errors.address}
+            </Form.Text>
+          </Form.Group>
+          { !change ? <Button variant="warning" onClick={toggleChanges}>Изменить</Button>
+            : <Button variant="warning" onClick={confirmChanges}>Сохранить изменения</Button>}
+        </Form>
+      </div>
     ) : (<Redirect to="/" />)
   );
 }
