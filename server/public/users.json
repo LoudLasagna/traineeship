@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Michael",
+    "phone": "8(999)999-99-99",
+    "email": "ttt@ttt",
+    "password": "test123",
+    "address": "teeteet"
+  }, {
+    "name": "Jim",
+    "phone": "8(999)999-99-91",
+    "email": "ttt@ttt",
+    "password": "test123",
+    "address": "teeteet"
+  }, {
+    "name": "Pam",
+    "phone": "8(999)999-99-92",
+    "email": "ttt@ttt",
+    "password": "test123",
+    "address": "teeteet"
+  }
+]
