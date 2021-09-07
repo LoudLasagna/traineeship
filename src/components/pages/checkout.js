@@ -20,8 +20,7 @@ function App() {
   const user = useSelector((state) => state.userReducer.user)
   const cart = useSelector((state) => state.cartReducer.cart)
   const dispatch = useDispatch()
-
-  if (cart.length === 0) return <Redirect to="/" />
+ 
 
   const [deliveryMethod, setDeliveryMethod] = useState('самовывоз')
   const [paymentMethod, setPaymentMethod] = useState('наличными')
@@ -140,9 +139,9 @@ function App() {
         .catch((error) => console.log(error))
     }
   }
-
-  return (
-    <div className="wrapper col-11 mt-3 center-block mx-auto p-4">
+  validateInput();
+  return (cart.length > 0
+    ? (<div className="wrapper col-11 mt-3 center-block mx-auto p-4">
       <header>
         <h2>магазинский | оформление заказа</h2>
       </header>
@@ -317,6 +316,7 @@ function App() {
         </Row>
       </Container>
     </div>
+    ) : ( <Redirect to="/" /> )
   );
 }
 

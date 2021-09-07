@@ -17,8 +17,6 @@ function App() {
   const loggedIn = useSelector((state) => state.userReducer.loggedIn)
   const dispatch = useDispatch()
 
-  if (!loggedIn) return <Redirect to="/" />
-
   const [change, setChange] = useState(false)
 
   const [fields, setFields] = useState({
@@ -117,8 +115,8 @@ function App() {
     validateInput()
   }
 
-  return (
-    <div className="wrapper col-11 mt-3 center-block mx-auto p-4">
+  return (loggedIn 
+    ? (<div className="wrapper col-11 mt-3 center-block mx-auto p-4">
       <header>
         <h2>магазинский | профиль</h2>
       </header>
@@ -196,6 +194,7 @@ function App() {
           : <Button variant="warning" onClick={confirmChanges}>Сохранить изменения</Button>}
       </Form>
     </div>
+    ) : (<Redirect to="/" />)
   );
 }
 
