@@ -22,9 +22,9 @@ function MainCartButton() {
 
   if (cart.length > 0) {
     totalProducts = cart.map((cartEntry) => cartEntry.amount)
-      .reduce((accumulator, currentValue) => accumulator + currentValue)
+      .reduce((accumulator, { amount: currentValue }) => accumulator + currentValue, 0)
     totalPrice = cart.map((cartEntry) => cartEntry.amount * cartEntry.object.price)
-      .reduce((accumulator, currentValue) => accumulator + currentValue)
+      .reduce((accumulator, { amount: currentValue }) => accumulator + currentValue, 0)
   }
 
   const clearCartClick = () => {

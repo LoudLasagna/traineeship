@@ -18,11 +18,7 @@ const ProductCartButton = (props) => {
 
   const dispatch = useDispatch()
 
-  let isInCart;
-
-  if (cart.find((item) => item.object.id === id)) {
-    isInCart = true;
-  } else isInCart = false;
+  const isInCart = Boolean(cart.find((item) => item.object.id === id))
 
   const handleCartClick = () => {
     dispatch(addProduct({

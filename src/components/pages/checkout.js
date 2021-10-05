@@ -138,9 +138,10 @@ function App() {
         .catch((error) => console.log(error))
     }
   }
-  validateInput();
-  return (cart.length > 0
-    ? (
+
+  return (cart.length === 0)
+    ? (<Redirect to="/" />)
+    : (
       <div className="wrapper col-11 mt-3 center-block mx-auto p-4">
         <header>
           <h2>магазинский | оформление заказа</h2>
@@ -316,8 +317,7 @@ function App() {
           </Row>
         </Container>
       </div>
-    ) : (<Redirect to="/" />)
-  );
+    );
 }
 
 export default connect()(App);
